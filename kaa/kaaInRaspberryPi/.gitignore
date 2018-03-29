@@ -1,8 +1,21 @@
 .gradle
 /build/
 .idea
-out/
-
+out
+output/**
+*.class
+*.iml
+*/.idea/**
+.idea/**
+.idea
+*.log
+*.log.[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]
+*/.classpath
+.classpath
+*/.project
+.project
+.cache/**
+target/
 # Ignore Gradle GUI config
 gradle-app.setting
 
