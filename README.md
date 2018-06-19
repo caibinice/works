@@ -3,8 +3,8 @@ study/work experiences  
 工作或学习的收获
 
 ## 1.A Study in Kaa  
-[Kaa](https:://kaaproject.github.io/kaa/docs/v0.10.0/Welcome/) is an open-source IOT platform to solve the problem of communication between client and server.  
-Kaa是一个开源的IOT平台，还连同Azure IoT Suite, IBM Watson等一起被评为[2017年度IOT平台的TOP5](https://www.sam-solutions.com/blog/top-5-iot-platforms-2017/)  
+[Kaa](https://kaaproject.github.io/kaa/docs/v0.10.0/Welcome/) is an open-source IOT platform to solve the problem of communication between client and server.  
+Kaa是一个开源的IOT开发平台，连同Azure IoT, IBM Watson等被Sam Solutions评为[2017年IOT平台的TOP5](https://www.sam-solutions.com/blog/top-5-iot-platforms-2017)  
 
 Kaa Platform Investigation Report  
 [KaaIOT平台项目的研究报告](https://github.com/caibinice/works/blob/master/kaaReport.xlsx)
