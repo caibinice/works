@@ -19,9 +19,9 @@
 
 #define BUFF_SIZE 65536
 static char buff[BUFF_SIZE];
+static int g_single_proc_inst_lock_fd = -1;  
 
 kaa_client_t *kaa_client = NULL;
-
 
 static int32_t sample_period;
 static int32_t latitude = 0;
@@ -105,9 +105,42 @@ void on_notification(void *context, uint64_t *topic_id, kaa_notification_t *noti
         printf(buff);
     }
 }
+  
+static void single_proc_inst_lockfile_cleanup(void)  
+{  
+    if (g_single_proc_inst_lock_fd != -1) {  
+        close(g_single_proc_inst_lock_fd);  
+        g_single_proc_inst_lock_fd = -1;  
+    }  
+}  
+  
+int is_single_proc_inst_running(const char *process_name)  
+{  
+    char lock_file[128];  
+    snprintf(lock_file, sizeof(lock_file), "/var/tmp/%s.lock", process_name);  
+  
+    g_single_proc_inst_lock_fd = open(lock_file, O_CREAT|O_RDWR, 0644);  
+    if (-1 == g_single_proc_inst_lock_fd) {  
+        fprintf(stderr, "Fail to open lock file(%s). Error: %s\n",  
+            lock_file, strerror(errno));  
+        return 1;  
+    }  
+    if (0 == flock(g_single_proc_inst_lock_fd, LOCK_EX | LOCK_NB)) {  
+        atexit(single_proc_inst_lockfile_cleanup);  
+        return 0;  
+    }  
+    close(g_single_proc_inst_lock_fd);  
+    g_single_proc_inst_lock_fd = -1;  
+    return 2;  
+} 
 
 int main(void)
 {
+    //判断是否已经有相同进程在运行
+    if (is_single_proc_inst_running("kaaClientDemo")) {
+        exit(0);
+    }    
+
     /* Init random generator used to generate temperature */
     srand(time(NULL));
     /* Prepare Kaa client. */
